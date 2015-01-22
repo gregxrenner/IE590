@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<link type="text/css" rel="stylesheet" href="Homework1Format.css"/>
+	<title>Greg's Resume</title>
+</head>
+<body>
+	<p>Still trying to get github to work</p>
+	<table> style="width: 100%">
+		<tr> <!--Name-->
+			<td>
+			</td>
+			<td>
+			</td>
+		</tr>
+		<tr> <!--Department->
+			<td>
+			</td>
+			<td>
+			</td>
+		</tr>
+		<tr> <!--Education-->
+			<td>
+			</td>
+			<td>
+			</td>
+		</tr>
+		<tr>  <!--Available Hours-->
+			<td>
+			</td>
+			<td>
+			</td>
+		</tr>
+		<tr> <!--Skills-->
+			<td>
+			</td>
+			<td>
+			</td>
+		</tr>
+		<tr> <!--Personality-->
+			<td>
+			</td>
+			<td>
+			</td>
+		</tr>
+</body>
+</html>
