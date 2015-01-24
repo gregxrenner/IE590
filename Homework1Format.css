@@ -1,1 +1,21 @@
-Format.css
+/*Formatting for HW1*/
+* {
+	font-family: Serif, Verdana;
+}
+
+.Category {
+	font-style: bold;
+	font-size: 1.2em;
+}
+
+table, td {
+	border: 2px solid black;
+}
+
+tr {
+	border: 1px solid black;
+}
+
+a {
+	font-color: blue;
+}
