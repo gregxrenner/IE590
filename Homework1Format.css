@@ -8,13 +8,16 @@
 	font-size: 1.2em;
 }
 
-table, td {
-	border: 2px solid black;
+table {
+	border-collapse: collapse;
+	border: 6px solid black;
 }
 
-tr {
-	border: 1px solid black;
+
+tr, td {
+	border: 3px solid black;
 }
+
 
 a:link {
 	font-color: blue;
@@ -25,5 +28,5 @@ a:visited {
 	}
 
 a:hover {
-	color: teal;
+	color: orange;
 }
