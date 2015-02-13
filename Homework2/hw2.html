@@ -5,36 +5,43 @@
 	<title>Homework2</title>
 	<!-- load in jQuery -->
 	<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<!-- load in stylesheet -->
+	<link type="text/css" rel="stylesheet" href="hw2Format.css"/>
+
 </head>
 <body>
-	<h1>Up and running.</h1>
+	<div id='headerDiv'>
+		<h1>Possible Applicants</h1>
+	</div>
 
 	<table id="hw2Table">
 		<tr>
-			<td></td>
+			<th>Essay</th>
+			<th>GPA</th>
+			<th>GRE_Q</th>
+			<th>GRE_V</th>
+			<th>Name</th>
+			<th>Recommendation</th>
 		<tr>
 	</table>
 
-	<script>
+	<script type="text/javascript">
 		$(document).ready(function() {	/*wait for dom to load*/
 			$.ajax({
 				url:"https://hivelab.org/static/students.json",
 				dataType: 'json',
 				type: 'get',
 				success: function(data) {
+					
+					var applicant = $('#hw2Table');
+					/*get each applicant*/
 					$.each(data, function(index, value){
+						/*log the names to the console to ensure correct looping*/
 						console.log(value.Name);
-						var $tr = $('<tr>').append(
-							$('<td>').text(value.Essay),
-							$('<td>').text(value.GPA),
-							$('<td>').text(value.GRE_Q),
-							$('<td>').text(value.GRE_V),
-							$('<td>').text(value.Name),
-							$('<td>').text(value.Recom)
-							);
-						console.log($tr.wrap('<p>').html());
+						/*append all the colums to a single column row*/
+						applicant.append('<tr><td>' +value.Name + '</td><td>' + value.Essay + '</td><td>' + value.GPA + '</td><td>' + value.GRE_Q + '</td><td>' + value.GRE_V + '</td><td>' + value.Recom + '</td></tr>');
+
 					})
-			console.log(data);
 				}
 			})	
 		});

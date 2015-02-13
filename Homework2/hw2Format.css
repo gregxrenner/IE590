@@ -1,0 +1,44 @@
+/*Formatting for HW1*/
+* {
+	font-family: Serif, Verdana;
+}
+
+#headerDiv {
+	width: 1200px;
+}
+
+h1 {
+	text-align: center;
+	text-decoration:  underline;
+}
+
+table {
+	border-collapse: collapse;
+	border: 6px solid black;
+	width: 1200px;
+	background-color: #FFFFCC;
+}
+
+
+tr, td {
+	border: 2px solid black;
+	text-align: center;
+}
+
+th {
+	text-align: center;
+	border: 2px solid black;
+}
+
+
+a:link {
+	font-color: blue;
+}
+
+a:visited {
+	color: green;
+	}
+
+a:hover {
+	color: orange;
+}
