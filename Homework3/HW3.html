@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+	<head>
+		<meta charset="utf-8">
+		<title>HW3</title>
+		<link type="text/css" rel="stylesheet" href="hw3Format.css"/>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	<head>
+
+	<body>
+		<h2>Most Effective Math Classes by Country</h2>
+
+		<script type="text/javascript">
+
+			/*Set width and height of chart*/
+			var w = 500;
+			var h = 100;
+			var barPadding = 1;
+			var dataset;
+
+			/*pull in the scores dataset*/
+			d3.csv("data.csv", function(error, data) {
+				if (error) { /*if error isn't null something is wrong*/
+					console.log(error);
+				} else {
+					console.log(data);
+					dataset = data;
+				}
+			})
+
+			/*Create the SVG element to add to the DOM*/
+			var svg = d3.select("body")
+				.append("svg")
+				.attr("width", w)
+				.attr("height", h);
+
+			/*Add the bars to the SVG*/
+			svg.selectAll("rect")
+				.data(dataset)
+				.enter()
+				.append("rect")
+				.attr("x", function(d,i) {
+					return i * (w / dataset.length);
+				})
+				.attr("y", function(d) {
+					return h - d;
+				})
+				.attr("width", w/dataset.length - barPadding) /*Make the bar width the number of hours of instruction for the country*/
+				.attr("height", function(d) {
+					return d;
+				});
+
+		</script>
+
+		<p id="Findings">
+			Findings
+		</p>
+		<p>
+			Note: Trends in International Mathematics and Science Study (TIMSS) scores are reported on a scale from 0 to 1,000, with the scale average set at 500 and the standard deviation set at 100.
+		<p>
+		<p>Source:
+			<a href="http://nces.ed.gov/programs/digest/d12/tables/dt12_460.asp"><i>Average fourth-grade scores and annual instructional time in mathematics and science, by country or other education system: 2011</i></a>
+		</p>
+		<p>Author: Greg Renner</p>
+	</body>
+
+</html>
