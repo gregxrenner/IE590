@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+	<head>
+		<meta charset="utf-8">
+		<title>HW3</title>
+		<link type="text/css" rel="stylesheet" href="hw3Format.css"/>
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+	<head>
+
+	<body>
+
+		<center>
+
+		<h2>Most Effective Math Classes by Country</h2>
+
+		<div id="chart">
+
+			<script type="text/javascript">
+
+			var dataset;
+
+				/*pull in the scores dataset*/
+				d3.csv("Data.csv", function(error, data) {
+					if (error) { /*if error isn't null something is wrong*/
+						console.log(error);
+					} else {
+
+					dataset = data.map(function(d) {
+						return [+d["Points per Hour"], 
+								+d["Math Instruction in Hours per Year"],
+								 d["Country"],
+								 d["Continent/Region"],
+								 d["Color"]
+							   ];
+					});
+
+
+				//Width and height
+				var w = 1000;
+				var h = 200;
+				var padding = 10;
+				var buffer = 50;
+							
+
+				var tooltip = d3.select("body").append("div")
+							.attr("class", "tooltip")
+							.style("opacity", 0);
+
+				/*set scales*/
+			    var xScale= d3.scale.linear()
+	                        .domain([0,200])
+	                        .range([padding,w+padding]);
+				var yScale= d3.scale.linear()
+                          .domain([0,6])
+                          .range([h-padding,padding]);
+				
+				
+				console.log(dataset);
+
+				//Create SVG element
+				var svg = d3.select("div")
+							.append("svg")
+							.attr("transform", "translate(50)")
+							.attr("width", w)
+							.attr("height", h + buffer)
+							.style("vertical-align:", "middle")
+							.style("display", "block")
+							.style("text-align", "center")
+							.style("align", "center")
+							.style("margin-right", "auto")
+							.style("margin-left", "auto");
+
+
+				/*create x axis*/
+			    svg.append("g")	
+			        .attr("class","axis")
+			        .text("X axis")
+			        .attr("transform","translate(0,"+(h)+")")
+			        .call(d3.svg.axis()
+			        .scale(xScale)
+			        .orient("bottom")
+			        .ticks(0));
+	        	/*write stuff on x axis*/
+			     svg.append("text")
+			        .attr("x",250)
+			        .attr("y",h+20)
+			        .attr("fill", "black")
+			        .attr("style","font-size:15px")
+			        .text(function(){return "Bar height reflects how many TIMSS points are earned for each hour of math instruction.";});
+
+		        /*create y axis*/
+				svg.append("g")	
+			        .attr("class","axis")
+			        .text("y axis")
+			        .attr("transform","translate("+padding+",0)")
+			        .call(d3.svg.axis()
+			        .scale(yScale)
+			        .orient("left")
+			        .ticks(5));
+	        	/*label y axis
+		        svg.append("text")
+		            .attr("x", -h/2 - 30)
+		            .attr("y", -5)
+		            .attr("fill", "black")
+		            .attr("transform","rotate(-90)")
+		            .attr("style","font-size:15px")
+		            .text(function(){return "Points per Hour";});
+        		*/        
+
+
+				/*create bars*/
+				svg.selectAll("rect")
+					.data(dataset)
+					.enter()
+					.append("rect")
+					.attr("x", function(d, i) {
+						return i * (w / dataset.length) + padding;
+					})
+					.attr("y", function(d, i) {
+						return h - (dataset[i][0] * 200/6);				/*height of chart minus bar height*/
+					})
+					.attr("width", w / dataset.length - padding)		/*Make the bar width the number of hours of instruction for the country*/
+					.attr("height", function(d, i) {					/*bar height is points per hour*/
+						return dataset[i][0] * 200/6;					/*scale bar height by 10 to see more clearly*/
+					})
+					.style("fill", function(d,i) {	
+						return dataset[i][4];							/*color the bar based on country*/
+					})
+					.on("mouseover", function(d, i) {
+										tooltip.transition()
+										.duration(200)
+										.style("opacity", .9);
+										tooltip.html(dataset[i][2] + "  " + dataset[i][0])
+										.style("left", (d3.event.pageX + 10) + "px")
+										.style("top", (d3.event.pageY - 8) + "px");
+									})
+					.on("mouseout", function(d) {
+						tooltip.transition()
+						.duration(500)
+						.style("opacity", 0);
+						});
+
+				}
+
+			});
+
+			</script>
+
+		</div>
+
+
+			<p id-"source">Source:
+				<a href="http://nces.ed.gov/programs/digest/d12/tables/dt12_460.asp"><i>Average fourth-grade scores and annual instructional time in mathematics and science, by country or other education system: 2011</i></a>
+			</p>
+
+			<p>
+				Note: Trends in International Mathematics and Science Study (TIMSS) scores are reported on a scale from 0 to 1,000, with the scale average set at 500 and the standard deviation set at 100.
+			</p>
+
+			<p>Author: Greg Renner</p>
+
+		</center>
+
+		<h2 id="Findings">Findings</h2>
+		<p>	There is a vast difference in the effectiveness of countries math instruction techniques. Some countries are twice as effective with their time. Continent seems to have little affect on effectiveness as Asia has the last effective county (Yemen) as well the the seond and third most effective countries (Korea and China). It seems that an investigation into teaching strategies could greatly benefit some countries math scores.
+		</p>
+
+
+
+	</body>
+
+
+
+</html>

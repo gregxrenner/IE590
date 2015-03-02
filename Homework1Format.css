@@ -3,31 +3,19 @@
 	font-family: Serif, Verdana;
 }
 
-#headerDiv {
-	width: 80%;
-}
-
-h1 {
-	text-align: center;
-	text-decoration:  underline;
+.Category {
+	font-weight: bold;
+	font-size: 1.2em;
 }
 
 table {
 	border-collapse: collapse;
 	border: 6px solid black;
-	width: 80%;
-	background-color: #FFFFCC;
 }
 
 
 tr, td {
-	border: 2px solid black;
-	text-align: center;
-}
-
-th {
-	text-align: center;
-	border: 2px solid black;
+	border: 3px solid black;
 }
 
 
