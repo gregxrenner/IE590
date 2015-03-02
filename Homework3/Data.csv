@@ -1,186 +1,51 @@
-Country,Continent/Region,Math Score,Math Instruction in Hours per Year,Points per Hour,,
-Armenia,Eastern Europe,452,139,3.25,,
-Australia,Australia,516,230,2.24,,
-Austria,Western Europe,508,146,3.48,,
-Azerbaijan,Asia,463,130,3.56,,
-Bahrain,Eastern Europe,436,131,3.33,,
-Belgium (Flemish)-BEL,Western Europe,549,224,2.45,,
-Chile,South America,462,231,2.00,,
-Chinese Taipei-CHN,Asia,591,133,4.45,,
-Croatia,Eastern Europe,490,134,3.66,,
-Czech Republic,Eastern Europe,511,163,3.13,,
-Denmark,Western Europe,537,124,4.33,,
-England-GBR,Western Europe,542,188,2.88,,
-Finland,Western Europe,545,139,3.92,,
-Georgia,Europe,450,148,3.04,,
-Germany,Western Europe,528,163,3.24,,
-Hong Kong-CHN,Asia,602,158,3.81,,
-Hungary,Europe,515,148,3.48,,
-"Iran, Islamic Republic of",Middle East,431,146,2.95,,
-Ireland,Western Europe,527,150,3.52,,
-Italy,Western Europe,508,214,2.37,,
-Japan,Asia,585,150,3.90,,
-Kazakhstan,Asia,501,140,3.58,,
-"Korea, Republic of",Asia,605,121,5.00,,
-Kuwait,Middle East,342,120,2.85,,
-Lithuania,Eastern Europe,534,133,4.01,,
-Malta,Western Europe,496,183,2.71,,
-Morocco,Africa,335,174,1.92,,
-Netherlands,Western Europe,540,195,2.77,,
-New Zealand,Australia,486,168,2.89,,
-Northern Ireland-GBR,Western Europe,562,232,2.42,,
-Norway,Western Europe,495,157,3.15,,
-Oman,Middle East,385,170,2.26,,
-Poland,Western Europe,481,157,3.06,,
-Portugal,Western Europe,532,250,2.13,,
-Qatar,Middle East,413,185,2.23,,
-Romania,Eastern Europe,482,148,3.26,,
-Russian Federation,Eastern Europe,542,104,5.21,,
-Saudi Arabia,Middle East,410,147,2.79,,
-Serbia,Eastern Europe,516,153,3.37,,
-Singapore,Asia,606,208,2.91,,
-Slovak Republic,Eastern Europe,507,147,3.45,,
-Slovenia,Eastern Europe,513,169,3.04,,
-Spain,Western Europe,482,167,2.89,,
-Sweden,Western Europe,504,138,3.65,,
-Thailand,Asia,458,167,2.74,,
-Tunisia,Asia,359,175,2.05,,
-Turkey,Middle East,469,126,3.72,,
-United Arab Emirates,Middle East,434,154,2.82,,
-United States,North America,541,206,2.62,,
-Yemen,Asia,248,135,1.83,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
- ,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
+Country,Continent/Region,Math Instruction in Hours per Year,Points per Hour,Color
+Yemen,Asia,135,1.83,blue
+Morocco,Africa,174,1.92,red
+Chile,South America,231,2,yellow
+Tunisia,Asia,175,2.05,blue
+Portugal,Western Europe,250,2.13,brown
+Qatar,Middle East,185,2.23,black
+Australia,Australia,230,2.24,green
+Oman,Middle East,170,2.26,black
+Italy,Western Europe,214,2.37,brown
+Northern Ireland-GBR,Western Europe,232,2.42,brown
+Belgium (Flemish)-BEL,Western Europe,224,2.45,brown
+United States,North America,206,2.62,turquoise
+Malta,Western Europe,183,2.71,brown
+Thailand,Asia,167,2.74,blue
+Netherlands,Western Europe,195,2.77,brown
+Saudi Arabia,Middle East,147,2.79,black
+United Arab Emirates,Middle East,154,2.82,black
+Kuwait,Middle East,120,2.85,black
+England-GBR,Western Europe,188,2.88,brown
+New Zealand,Australia,168,2.89,green
+Spain,Western Europe,167,2.89,brown
+Singapore,Asia,208,2.91,blue
+"Iran, Islamic Republic of",Middle East,146,2.95,black
+Georgia,Europe,148,3.04,orange
+Slovenia,Eastern Europe,169,3.04,purple
+Poland,Western Europe,157,3.06,brown
+Czech Republic,Eastern Europe,163,3.13,purple
+Norway,Western Europe,157,3.15,brown
+Germany,Western Europe,163,3.24,brown
+Armenia,Eastern Europe,139,3.25,purple
+Romania,Eastern Europe,148,3.26,purple
+Bahrain,Eastern Europe,131,3.33,purple
+Serbia,Eastern Europe,153,3.37,purple
+Slovak Republic,Eastern Europe,147,3.45,purple
+Austria,Western Europe,146,3.48,brown
+Hungary,Europe,148,3.48,orange
+Ireland,Western Europe,150,3.52,brown
+Azerbaijan,Asia,130,3.56,blue
+Kazakhstan,Asia,140,3.58,blue
+Sweden,Western Europe,138,3.65,brown
+Croatia,Eastern Europe,134,3.66,purple
+Turkey,Middle East,126,3.72,black
+Hong Kong-CHN,Asia,158,3.81,blue
+Japan,Asia,150,3.9,blue
+Finland,Western Europe,139,3.92,brown
+Lithuania,Eastern Europe,133,4.01,purple
+Denmark,Western Europe,124,4.33,brown
+Chinese Taipei-CHN,Asia,133,4.45,blue
+"Korea, Republic of",Asia,121,5,blue
+Russian Federation,Eastern Europe,104,5.21,purple
