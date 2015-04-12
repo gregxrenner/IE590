@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>HW4</title>
+		<!--<link type="text/css" rel="stylesheet" href="hw4Format.css"/>-->
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+	</head>
+
+	<style>
+		body {
+		  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+		  margin: auto;
+		  position: relative;
+		  width: 960px;
+		}
+		.node {
+		  border: solid 1px white;
+		  font: 10px sans-serif;
+		  line-height: 12px;
+		  overflow: hidden;
+		  position: absolute;
+		  text-indent: 2px;
+		}
+		#ribbon {
+		  margin: auto;
+		  position: relative;
+		  width: 960px;
+		  text-align:center;
+		}
+		h1,h2,h3,p{
+		  text-align:center;
+		}
+	</style>
+
+	<body>
+
+		<h1>Coffee Sales</h1>
+		<p>Mouse over node to display details.</p>
+
+		<script type="text/javascript">
+
+			var color = d3.scale.category20();	/*set color scale*/
+
+			var tooltip = d3.select("body").append("div")	/*create tooltips to display details on mouseover*/
+					.attr("class", "tooltip")
+					.style("opacity", 0);
+
+			var border = {top:10, bottom:10, right:10, left:10},	/*set size and borders of vis*/
+				w=1020-border.left-border.right,
+				h=620-border.top-border.bottom;
+
+			var image = d3.select("body").append("div")	/*create area for vis*/
+			    .style("position", "relative")
+			    .style("width", w + "px")
+			    .style("height", h + "px")
+			    .style("left", border.left + "px")
+			    .style("top", border.top + "px");
+
+			/*pull in the coffee dataset*/
+			d3.csv("data.csv", function(root) {
+				var treedata = d3.nest()	/*nest the data so its hierarchial*/
+					.key(function() {return "rootNode";}) /*create node all data stems from*/
+					.key(function(d) {return d.region;})
+					.key(function(d) {return d.state;})
+					.key(function(d) {return d.category;}) 
+					.key(function(d) {return d.type;})	
+					.entries(root);
+
+					console.log(treedata);
+
+					var treemap=d3.layout.treemap() /*put data into treemap layout*/
+						.size([w,h])
+						.sticky(true)
+						.children(function(d) {return d.values; })
+						.value(function(d) { return +d.profit; })
+						.nodes(treedata[0]);
+
+					var node = image.datum(treedata[0]).selectAll(".node")	/*create nodes to append data to*/
+				    .data(treemap)
+				    .enter().append("div")	/*create all the data divs for the treemap*/
+					    .attr("class", "node")
+					    .call(position)
+					    .style("background", function(d) { return  d.children ?  null:color(d.state); }) 
+						.on("mouseover", function(d) {	/*display details on mouseover*/
+							tooltip.transition()
+							.duration(200)
+							.style("opacity", .9);
+							tooltip.html("Region: " +d.region +","      /*details to display*/
+									 +"	State: " +d.state +","
+									 +"	Category: " +d.category +","
+									 +"	Type: " +d.type +","
+									 +"	Profit: " +d.profit)	
+							.style("left", (d3.event.pageX + 10) + "px")
+							.style("top", (d3.event.pageY - 8) + "px");
+										})
+						.on("mouseout", function(d) {	/*remove details on mouseout*/
+							tooltip.transition()
+							.duration(500)
+							.style("opacity", 0);
+					    	})
+
+						console.log(treemap);
+
+				    	d3.selectAll("input").on("change", function change() {
+						  	var value = this.value === "state"
+					  			? "d.region"
+        						: "d.size";
+				    	 
+						    node 
+						    	/*.data(treemap)*/
+						    	.data(treemap.value(value).nodes)
+						    	.transition()
+        						.duration(750)
+							    .style("background", function(d) { return  d.children ?  null:color(value); }) 
+						  		console.log(value);							
+							});					
+
+				}); /*close d3.csv anonymous function*/
+
+
+			function position() {	/*position the leaves*/
+		    this.style("left", function(d) { return d.x + "px"; })
+		    	.style("top", function(d) { return d.y + "px"; })
+		        .style("width", function(d) { return Math.max(0, d.dx - 1) + "px"; })
+		        .style("height", function(d) { return Math.max(0, d.dy - 1) + "px"; });
+	        	}
+
+		</script>
+
+		<p>Select the level of the tree to base the colors on.</p>
+		<form>	
+			<label><input type="radio" name="mode" value="region" checked> Region</label>
+			<label><input type="radio" name="mode" value="state"> State</label>
+		</form>
+		<h3>Visualization by Greg Renner</h3>
+
+	</body>
+
+</html>
