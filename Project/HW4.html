@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Growth and Costs of the Supplemental Nutrition Assistance Program</title>
+	<script src="http://d3js.org/d3.v3.js"></script>
+	<script src="http://code.jquery.com/jquery.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<style>
+	path:hover {
+		opacity: 0.3;
+		transition-duration: 0.2s;}
+	div.tooltip {   
+		position: absolute;
+		min-width: 60px;
+		height: auto;
+		padding: 10px;
+		background-color: silver;
+		border-radius: 10px;
+		pointer-events: none;}
+
+	body {background-color:lightgray}
+	h1 {
+		font: 20px sans-serif;
+		}
+	.textBlock {
+		font: 14px sans-serif;
+		text-align: left;
+		width: 60%;
+		}
+	.cite {
+		font: 11px sans-serif;
+		font-style: italic;
+		text-align: center;
+		}
+	.legend { list-style: none; }
+	.legend li { float: left; margin-right: 10px; }
+	.legend span { border: 1px solid #ccc; float: left; width: 12px; height: 12px; margin: 2px; }
+	.legend .first { background-color: #29A329; }
+	.legend .second { background-color: #248F24; }
+	.legend .third { background-color: #1A661A; }
+	.legend .fourth { background-color: #0F3D0F; }
+	.legend .fifth { background-color: #051405; }
+</style>
+
+<body>
+<center>
+	
+	<h1>Growth and Costs of the Supplemental Nutrition Assistance Program</h1><br><br>
+	<p class="textBlock"><b>2014 Benefits per Household</b></p>
+	<p class="textBlock">The map below shows the benefits per household by state for the Supplemental
+		Nutrition Assistance Program (SNAP). This program was formally known as the Food Stamps program.
+		Blank States reflect an absence of data. Thanks to Mrs. Nadine Nichols and Mrs. Maeve Myers 
+		for providing the specific data we were looking for.
+	</p>
+
+<div id="plot1" style="margin:0px auto;">
+	<script type="text/javascript">
+		var w = 800;
+		var h = 400;
+		var projection = d3.geo.albersUsa()
+			.translate([w/2, h/2])
+			.scale([800]);
+		var path = d3.geo.path()
+			.projection(projection);
+		var color = d3.scale.quantize()
+		.range(["#1F7A1F","#1A661A","#145214","#0F3D0F","#0A290A","#051405","#000000"]);
+		var div = d3.select("body").append("div")   
+		    .attr("class", "tooltip")               
+		    .style("opacity", 0);
+		var svg = d3.select("#plot1")
+					.append("svg")
+					.attr("width", w)
+					.attr("height", h);
+		d3.csv("2014costPerHome.csv", function(data) {
+			color.domain([
+				d3.min(data, function(d) { return d.value; }), 
+				d3.max(data, function(d) { return d.value; })
+			]);
+			var tooltip = d3.select("body").append("div") /*add tooltips*/
+					.attr("class", "tooltip")
+					.style("opacity", 0);
+			d3.json("us-states.json", function(json) {
+				for (var i = 0; i < data.length; i++) {
+					var dataState = data[i].state;
+					var dataValue = parseFloat(data[i].value);
+					for (var j = 0; j < json.features.length; j++) {
+						var jsonState = json.features[j].properties.name;
+						if (dataState == jsonState) {
+							json.features[j].properties.value = dataValue;
+							break;
+						}
+					}		
+				}
+				svg.selectAll("path")
+				   .data(json.features)
+				   .enter()
+				   .append("path")
+				   .attr("d", path)
+				   .style("fill", function(d) {
+				   		var value = d.properties.value;
+				   		
+				   		if (value) {
+					   		return color(value);
+				   		} else {
+					   		return "#ccc";
+				   		}
+				   })
+   				.on("mouseover", function(d) {
+					div.transition()
+					.style("opacity", .9);
+					div.html(function() { 
+							return "State: <strong>" + d.properties.name + "</strong><br> Benefit per home: $<strong>" + d.properties.value;
+            			}) 
+					.style("left", (d3.event.pageX + 10) + "px")
+					.style("top", (d3.event.pageY - 8) + "px");
+				})
+				.on("mouseout", function(d) {
+					div.transition()
+					.style("opacity", 0);
+					});
+	
+			});
+		});
+	</script>
+</div>
+<div style="width:400px; margin: 0 auto 0 auto;">
+	<ul class="legend">
+    		<li><span class="first"></span>$200+</li>
+    		<li><span class="second"></span>$230+</li>
+    		<li><span class="third"></span>$260+</li>
+    		<li><span class="fourth"></span>$280+</li>
+     		<li><span class="fifth"></span>$300+</li>
+	</ul>
+</div><br><br>
+
+<p class="cite">Data Source: Data.gov</p><br>
+
+<center><p> ---------------------------------------------------------------------- <p></center>
+<div id ="time">
+
+<h1>National Growth of SNAP Nationwide</h1>
+<br>
+<p id="CostsID"><em><b>Click Here</em></b> to show Total Cost over time ($M).</p>
+<p id="ParticipationID"><b><em>Click Here</em></b> to show Average Partipation in Thousands over time.</p>
+
+</div>	
+<br>
+<p class="cite">Data Source: Data.gov</p><br>
+
+<center><p> ---------------------------------------------------------------------- <p></center>
+
+		<script type="text/javascript">
+			//Code Sources are Purdue IE590 course material and assigned D3 book (Scott Murray) examples
+			//Width and height
+			var w = 1000;
+			var h = 400;
+			var cost = [];
+			var participation = [];
+			var plotcost = [];
+			var plotparticipation = [];
+			var header = [];
+			var year = [];
+			var eachtest = [];
+			var padding = 10;
+		
+//			 http://www.fns.usda.gov/sites/default/files/pd/SNAPsummary.xls
+			d3.csv("SNAPsummary.csv", function(SNAPdata) {
+				console.log("Snapdata Input");
+				console.log(SNAPdata);
+				console.log("Map Snapdata for bar charts");
+				header = Object.keys(SNAPdata[0]);
+				console.log("Show header row:  "+header);
+
+  				SNAPdata.map(function(d) {
+  					console.log ('Fiscal Year '+d['Fiscal Year']+' - Total Costs '+d['Total Costs ($M)']);
+  					year.push(d['Fiscal Year']);
+  					cost.push(+d['Total Costs ($M)']);
+  					participation.push(+d['Average Participation (Thousands)']);
+  					plotcost.push({x:d['Fiscal Year'],y:d['Total Costs ($M)']});
+  					plotparticipation.push({x:d['Fiscal Year'],y:d['Average Participation (Thousands)']});
+  					if (d['Fiscal Year']==='2014'){
+						console.log("Years: "+year);
+						console.log("Cost:  "+cost+" total Length:"+cost.length);
+						console.log("Participation:  "+participation+" total Length:"+participation.length);
+						console.log("Plot Data:  "+plotcost);
+  					}
+  				});
+
+			var xScale = d3.scale.linear()
+				.domain(d3.range(cost.length))
+				.rangeRound([0, w/cost.length]);
+
+			var yScale = d3.scale.linear()
+				.domain([20, d3.max(cost)])
+				.range([0, h]);
+
+			var yAxisScaleCost = d3.scale.linear()
+				.domain([20, d3.max(cost)])
+				.range([h, 0]);
+
+			var yAxisCost = d3.svg.axis()
+				.scale(yAxisScaleCost)
+				.orient("left")
+				.ticks(4);
+
+			var yAxisScaleParticipation = d3.scale.linear()
+				.domain([20, d3.max(participation)])
+				.range([h, 0]);
+
+			var yAxisParicipation = d3.svg.axis()
+				.scale(yAxisScaleParticipation)
+				.orient("left")
+				.ticks(4);
+
+			//Create SVG element
+			var svg = d3.select("#time")
+						.append("svg")
+						.attr("width", w)
+						.attr("height", h);
+
+			//Create bars
+			svg.selectAll("rect")
+			   .data(cost)
+			   .enter()
+			   .append("rect")
+			   .attr("x", function(d, i) {
+					return xScale(i);
+			   })
+			   .attr("y", function(d) {
+			   		return h - yScale(d);
+			   })
+			   .attr("width", w / cost.length - padding)
+			   .attr("height", function(d) {
+			   		return yScale(d);
+			   })
+			   .attr("fill", function(d) {
+					return "teal";
+			   });
+
+			//Create labels
+			svg.selectAll("text")
+			   .data(year)
+			   .enter()
+			   .append("text")
+			   .text(function(d) {
+			   		return d;
+			   })
+			   .attr("text-anchor", "middle")
+			   .attr("x", function(d, i) {
+			   		return xScale(i) + padding;
+			   })
+			   .attr("y", function(d) {
+			   		return h - yScale(d);
+			   })
+			   .attr("font-family", "sans-serif")
+			   .attr("font-size", "10px")
+			   .attr("fill", "black");
+
+
+
+			//On click, update with new data			
+			d3.select("#ParticipationID")
+				.on("click", function() {
+
+					//Update all rects
+					svg.selectAll("rect")
+					   .data(participation)
+					   .transition()
+					   .duration(2000)
+					   .ease("linear")
+					   .attr("y", function(d) {
+					   		return h - yScale(d);
+					   })
+					   .attr("height", function(d) {
+					   		return yScale(d);
+					   })
+					   .attr("fill", function(d) {
+							return "skyblue";
+					   });
+
+					//change Y axis
+					svg.selectAll("g").remove();
+
+					//Rebuild Y Axis
+					svg.append("g")
+						.attr("class", "axis")
+						.attr("transform", "translate(60,0)")
+						.call(yAxisParicipation);
+
+				});
+
+			//On click, update with new data			
+			d3.select("#CostsID")
+				.on("click", function() {
+
+					//Update all rects
+					svg.selectAll("rect")
+					   .data(cost)
+					   .transition()
+					   .duration(2000)
+					   .ease("linear")
+					   .attr("y", function(d) {
+					   		return h - yScale(d);
+					   })
+					   .attr("height", function(d) {
+					   		return yScale(d);
+					   })
+					   .attr("fill", function(d) {
+							return "teal";
+					   });
+
+					//change Y axis
+					svg.selectAll("g").remove();
+
+					//Rebuild Y Axis	
+					svg.append("g")
+						.attr("class", "axis")
+						.attr("transform", "translate(60,0)")
+						.call(yAxisCost);
+				});	
+
+			// Create Initial Yaxis
+			svg.append("g")
+				.attr("class", "axis")
+				.attr("transform", "translate(" + 60+ ",0)")
+				.call(yAxisCost);
+
+			});
+		
+		</script>
+
+<!--Comment Feature-->	
+<div id="disqus_thread" style="width:600px; margin:30px auto;"></div>
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = 'dc-ie590';
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript" rel="nofollow">comments powered by Disqus.</a></noscript>
+<!--End Feature-->
+<!--Google Analytics-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-61614012-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+<!--End Google-->
+<br><br>
+<p class="textBlock"><b>Google Analytics Summary - 12 April 2015, 7:00PM EDT</b></p>
+<img src="googlesummary.jpg" width="60%">
+</center>
+</body>
+</html>
