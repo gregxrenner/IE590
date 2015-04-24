@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+		<title>Exam2</title>
+		<!--<link type="text/css" rel="stylesheet" href="hw3Format.css"/> -->
+		<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+	<head>
+
+	<style>
+
+		body {
+	  		font: 10px sans-serif;
+	  		margin-left: center;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		.table {
+			margin-left: auto;
+    		margin-right: auto;
+    		width: 70%
+		}
+
+		#header {
+			background:lightgrey;
+			color: black;
+			font: 35px sans-serif;
+			text-align: right;
+		}
+
+		tr {
+			color: black;
+
+			font: 25px sans-serif;
+			text-align: right;
+		}
+
+		tr:hover{	/*change row color on hover*/
+			background-color: yellow;
+		}
+
+		.highlight {
+			background-color: green;
+		}
+
+	</style>
+
+	<body>
+
+		<div class="table">
+
+			<h1>Exam 2 Table</h1>
+
+			<table class="table">
+			    <thead id="header"></thead>
+			    <tbody id="body"></tbody>
+			</table>
+
+			<script>
+
+				var data /*declare data global*/
+					
+				d3.json("https://hivelab.org/static/exam2.json", function(error, data) {	/*read in json data*/
+					if (error) return console.warn(error);
+					console.log(data);
+					console.log(data[0]);
+
+				//referenced code from http://bl.ocks.org/biovisualize/1226718
+				// add column headers 
+				    var th = d3.select("thead").selectAll("th")
+				            .data(jsonToArray(data[0]))
+				          .enter().append("th")
+				          	.style("border", "2px black solid")
+				            .text(function(d) { return d[0]; })
+
+				// add row for each ItemNo
+				    var tr = d3.select("tbody").selectAll("tr")
+				            .data(data)
+				          .enter().append("tr")
+				          	.on("click", function () { /*technique pulled from http://stackoverflow.com/questions/19114927/d3-js-highlighting-a-row-in-table*/
+				          		console.log("click");
+              					d3.selectAll("tr").classed("highlight", false);
+              					d3.select(this).classed("highlight", true);          
+				          	})
+
+				// add values to the cells
+				    var td = tr.selectAll("td")
+				            .data(function(d) { return jsonToArray(d); })
+				          .enter().append("td")
+							.style("border", "1px black solid")
+				            .text(function(d) { return d[1]; });
+
+	            //the 2 following functions are from http://bl.ocks.org/biovisualize/1226718
+					function jsonKeyValueToArray(k, v) {return [k, v];}
+
+					function jsonToArray(json) {	//function to format the json data for flexible reading
+					    var ret = new Array();		
+					    var key;
+					    for (key in json) {
+					        if (json.hasOwnProperty(key)) {		//build array of unique keys to get number of columns
+					            ret.push(jsonKeyValueToArray(key, json[key]));
+					        }
+					    }
+					    return ret;
+					    }
+
+
+				});	/*close d3.json*/
+
+			</script>
+
+		</div>
+
+	</body>
+
+</html>
