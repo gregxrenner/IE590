@@ -48,6 +48,10 @@
 			background-color: yellow;
 		}
 
+		tr.highlight:hover {	/*change color of highlighted row on hover*/
+			background-color: pink;
+		}
+
 		.highlight {
 			background-color: green;
 		}
@@ -58,7 +62,7 @@
 
 		<div class="table">
 
-			<h1>Exam 2 Table</h1>
+			<h1>Exam Question 3.2 Table</h1>
 
 			<table class="table">
 			    <thead id="header"></thead>
@@ -113,28 +117,29 @@
 					    return a > b ? 1 : a == b ? 0 : -1;
 					}
 
-					function jsonKeyValueToArray(k, v) {return [k, v];}
+					function transform(k, v) {return [k, v];} //format as array
 
 					function jsonToArray(json) {	//function to format the json data for flexible reading
 					    var ret = new Array();		
 					    var key;
+					    //console.log(key);
 					    for (key in json) {
 					        if (json.hasOwnProperty(key)) {		//build array of unique keys to get number of columns
-					            ret.push(jsonKeyValueToArray(key, json[key]));
+					            ret.push(transform(key, json[key]));
 					        }
 					    }
 					    return ret;
 					    }
 
 			    	//sorting code pulled from http://stackoverflow.com/questions/1129216/sorting-objects-in-an-array-by-a-field-value-in-javascript
-					function Sort(property) {
+					function Sort(value) {
 					    var sortOrder = 1;
-					    if(property[0] === "-") {
+					    if(value[0] === "-") {
 					        sortOrder = -1;
-					        property = property.substr(1);
+					        value = value.substr(1);
 					    }
-					    return function (a,b) {
-					        var result = (a[property] < b[property]) ? -1 : (a[property] > b[property]) ? 1 : 0;
+					    return function (a,b) {	//if a is less than b, move it down, if its greater move it up
+					        var result = (a[value] < b[value]) ? -1 : (a[value] > b[value]) ? 1 : 0;
 					        return result * sortOrder;
 					    }
 				    };	//close Sort
